@@ -31,7 +31,10 @@ cd ${pkg}
 kaem --file ${pkg}_alt.kaem
 cd ..
 
+# you need to drop a copy of tcc_bootstrap_alt into sysa before running ./rootfs.py
 cd tcc_bootstrap_alt
+/bootstrap-seeds/POSIX/x86/hex0-seed ./x86/hex0_x86.hex0 ./x86/artifact/hex0-seed
+/bootstrap-seeds/POSIX/x86/hex0-seed ./x86/kaem-minimal.hex0 ./x86/artifact/kaem-optional-seed
 kaem --file kaem.x86
 cp artifacts/tcc_27_boot_static.exe /usr/bin/tcc-boot0
 chmod 755 /usr/bin/tcc-boot0
