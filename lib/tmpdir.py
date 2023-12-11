@@ -51,7 +51,7 @@ class Tmpdir:
                 print(f"Unmounting tmpdir from {self.path}")
                 umount(self.path)
 
-           print(f"Removing {self.path}")
+            print(f"Removing {self.path}")
 # LJW hack disable deleting of build arifacts
 #           shutil.rmtree(self.path, ignore_errors=True)
 
