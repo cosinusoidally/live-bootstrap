@@ -1,0 +1,138 @@
+#!/bin/sh
+
+# SPDX-FileCopyrightText: 2020-2023 Andrius Štikonas <andrius@stikonas.eu>
+# SPDX-FileCopyrightText: 2020-2022 fosslinux <fosslinux@aussies.space>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+set -ex
+
+# Variables
+MES_ARENA=20000000
+MES_MAX_ARENA=20000000
+MES_STACK=6000000
+MES=${bindir}/mes-m2
+libdir=${MES_PREFIX}/lib
+
+if match ${ARCH} x86; then
+    MES_ARCH=x86
+    ARCH_BITS=32
+fi
+if match ${ARCH} amd64; then
+    MES_ARCH=x86_64
+    ARCH_BITS=64
+fi
+if match ${ARCH} riscv64; then
+    MES_ARCH=riscv64
+    ARCH_BITS=64
+fi
+
+# Check tarball checksums
+checksum-transcriber sources
+sha256sum -c sources.SHA256SUM
+
+# Unpack
+mkdir src build
+cd src
+ungz --file ${distfiles}/${NYACC_PKG}.tar.gz --output ${NYACC_PKG}.tar
+ungz --file ${distfiles}/${MES_PKG}.tar.gz --output ${MES_PKG}.tar
+cd ..
+
+cd build
+untar --file ../src/${NYACC_PKG}.tar
+untar --non-strict --file ../src/${MES_PKG}.tar # ignore symlinks
+mes_run=${MES_PREFIX}/kaem.run
+replace --file ${mes_run} --output ${mes_run} --match-on 0x1000000 --replace-with 0x8048000
+
+rm ../src/${NYACC_PKG}.tar ../src/${MES_PKG}.tar
+
+cp ../files/config.h ${MES_PREFIX}/include/mes
+
+cd ${MES_PREFIX}
+mkdir include/arch
+cp include/linux/${MES_ARCH}/syscall.h include/arch/syscall.h
+cp include/linux/${MES_ARCH}/kernel-stat.h include/arch/kernel-stat.h
+
+# Remove pregenerated files
+rm mes/module/mes/psyntax.pp mes/module/mes/psyntax.pp.header
+
+# These files are symlinked in the repo
+cp mes/module/srfi/srfi-9-struct.mes mes/module/srfi/srfi-9.mes
+cp mes/module/srfi/srfi-9/gnu-struct.mes mes/module/srfi/srfi-9/gnu.mes
+
+# Make directories
+mkdir ${prefix}/lib/linux ${incdir}/mes ${incdir}/sys ${incdir}/linux ${incdir}/arch
+mkdir ${prefix}/lib/${MES_ARCH}-mes ${prefix}/lib/linux/${MES_ARCH}-mes ${incdir}/linux/${MES_ARCH}
+
+# Install header files
+cp include/alloca.h ${incdir}/alloca.h
+cp include/argz.h ${incdir}/argz.h
+cp include/ar.h ${incdir}/ar.h
+cp include/assert.h ${incdir}/assert.h
+cp include/ctype.h ${incdir}/ctype.h
+cp include/dirent.h ${incdir}/dirent.h
+cp include/dirstream.h ${incdir}/dirstream.h
+cp include/dlfcn.h ${incdir}/dlfcn.h
+cp include/endian.h ${incdir}/endian.h
+cp include/errno.h ${incdir}/errno.h
+cp include/fcntl.h ${incdir}/fcntl.h
+cp include/features.h ${incdir}/features.h
+cp include/float.h ${incdir}/float.h
+cp include/getopt.h ${incdir}/getopt.h
+cp include/grp.h ${incdir}/grp.h
+cp include/inttypes.h ${incdir}/inttypes.h
+cp include/libgen.h ${incdir}/libgen.h
+cp include/limits.h ${incdir}/limits.h
+cp include/locale.h ${incdir}/locale.h
+cp include/math.h ${incdir}/math.h
+cp include/memory.h ${incdir}/memory.h
+cp include/pwd.h ${incdir}/pwd.h
+cp include/setjmp.h ${incdir}/setjmp.h
+cp include/signal.h ${incdir}/signal.h
+cp include/stdarg.h ${incdir}/stdarg.h
+cp include/stdbool.h ${incdir}/stdbool.h
+cp include/stddef.h ${incdir}/stddef.h
+cp include/stdint.h ${incdir}/stdint.h
+cp include/stdio.h ${incdir}/stdio.h
+cp include/stdlib.h ${incdir}/stdlib.h
+cp include/stdnoreturn.h ${incdir}/stdnoreturn.h
+cp include/string.h ${incdir}/string.h
+cp include/strings.h ${incdir}/strings.h
+cp include/termio.h ${incdir}/termio.h
+cp include/time.h ${incdir}/time.h
+cp include/unistd.h ${incdir}/unistd.h
+
+cp include/arch/kernel-stat.h ${incdir}/arch/kernel-stat.h
+cp include/arch/syscall.h ${incdir}/arch/syscall.h
+
+cp include/linux/syscall.h ${incdir}/linux/syscall.h
+cp include/linux/${MES_ARCH}/syscall.h ${incdir}/linux/${MES_ARCH}/syscall.h
+
+cp include/mes/builtins.h ${incdir}/mes/builtins.h
+cp include/mes/cc.h ${incdir}/mes/cc.h
+catm ${incdir}/mes/config.h
+cp include/mes/constants.h ${incdir}/mes/constants.h
+cp include/mes/lib.h ${incdir}/mes/lib.h
+cp include/mes/lib-cc.h ${incdir}/mes/lib-cc.h
+cp include/mes/lib-mini.h ${incdir}/mes/lib-mini.h
+cp include/mes/mes.h ${incdir}/mes/mes.h
+cp include/mes/symbols.h ${incdir}/mes/symbols.h
+
+cp include/sys/cdefs.h ${incdir}/sys/cdefs.h
+cp include/sys/dir.h ${incdir}/sys/dir.h
+cp include/sys/file.h ${incdir}/sys/file.h
+cp include/sys/ioctl.h ${incdir}/sys/ioctl.h
+cp include/sys/mman.h ${incdir}/sys/mman.h
+cp include/sys/param.h ${incdir}/sys/param.h
+cp include/sys/resource.h ${incdir}/sys/resource.h
+cp include/sys/select.h ${incdir}/sys/select.h
+cp include/sys/stat.h ${incdir}/sys/stat.h
+cp include/sys/timeb.h ${incdir}/sys/timeb.h
+cp include/sys/time.h ${incdir}/sys/time.h
+cp include/sys/times.h ${incdir}/sys/times.h
+cp include/sys/types.h ${incdir}/sys/types.h
+cp include/sys/ucontext.h ${incdir}/sys/ucontext.h
+cp include/sys/user.h ${incdir}/sys/user.h
+cp include/sys/wait.h ${incdir}/sys/wait.h
+
+cd ../..
