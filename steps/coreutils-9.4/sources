@@ -1,5 +1,5 @@
 https://files.bootstrapping.world/coreutils-9.4.tar.xz 8fb56810310253300b3d6f84e68dc97eb2d74e1f4f78e05776831d9d82e4f2d7
-http://git.savannah.gnu.org/cgit/gnulib.git/snapshot/gnulib-bb5bb43.tar.gz b8aa1ac1b18c67f081486069e6a7a5564f20431c2313a94c20a46dcfb904be2a
+https://files.bootstrapping.world/gnulib-bb5bb43.tar.gz b8aa1ac1b18c67f081486069e6a7a5564f20431c2313a94c20a46dcfb904be2a
 http://ftp.unicode.org/Public/15.0.0/ucd/UnicodeData.txt 806e9aed65037197f1ec85e12be6e8cd870fc5608b4de0fffd990f689f376a73 UnicodeData-15.0.0.txt
 http://ftp.unicode.org/Public/15.0.0/ucd/PropList.txt e05c0a2811d113dae4abd832884199a3ea8d187ee1b872d8240a788a96540bfd PropList-15.0.0.txt
 http://ftp.unicode.org/Public/15.0.0/ucd/DerivedCoreProperties.txt d367290bc0867e6b484c68370530bdd1a08b6b32404601b8c7accaf83e05628d DerivedCoreProperties-15.0.0.txt
@@ -15,4 +15,3 @@ http://ftp.unicode.org/Public/15.0.0/ucd/auxiliary/GraphemeBreakProperty.txt 5a0
 http://ftp.unicode.org/Public/15.0.0/ucd/CompositionExclusions.txt 3b019c0a33c3140cbc920c078f4f9af2680ba4f71869c8d4de5190667c70b6a3 CompositionExclusions-15.0.0.txt
 http://ftp.unicode.org/Public/15.0.0/ucd/SpecialCasing.txt 78b29c64b5840d25c11a9f31b665ee551b8a499eca6c70d770fcad7dd710f494 SpecialCasing-15.0.0.txt
 http://ftp.unicode.org/Public/15.0.0/ucd/CaseFolding.txt cdd49e55eae3bbf1f0a3f6580c974a0263cb86a6a08daa10fbf705b4808a56f7 CaseFolding-15.0.0.txt
-https://files.bootstrapping.world/gnulib-bb5bb43.tar.gz b8aa1ac1b18c67f081486069e6a7a5564f20431c2313a94c20a46dcfb904be2a
