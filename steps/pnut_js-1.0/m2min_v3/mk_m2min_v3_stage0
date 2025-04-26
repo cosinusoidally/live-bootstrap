@@ -1,0 +1,18 @@
+#!/bin/bash
+
+./mk_clean
+
+set -xe
+
+# should be set to the bin dir in your stage0-posix checkout
+
+${STAGE0_PATH}/kaem --file ./build.kaem
+
+pushd .
+cd ..
+./mk_clean
+popd
+
+cp ./artifacts/pnut_js.exe ../artifacts/pnut-exe
+cd ..
+./mk_tcc-boot-mes
