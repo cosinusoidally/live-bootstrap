@@ -49,7 +49,7 @@ untar --non-strict --file ${MES_PKG}.tar
 
 # For some reason, the .tar.gz from github cannot be unpacked with ungz so it
 # must be manually unzipped before build process.
-untar --non-strict --file ${DISTFILES}/${PNUT_TAR}.tar
+untar --non-strict --file ../${PNUT_TAR}.tar
 
 # Create config.h
 catm ${MES_PKG}/include/mes/config.h
