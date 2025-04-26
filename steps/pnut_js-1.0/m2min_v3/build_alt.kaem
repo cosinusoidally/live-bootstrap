@@ -4,34 +4,36 @@ set -ex
 
 PATH=${STAGE0_PATH}/../artifact/
 
-# build m2min_v3 using m2min_v3.M1
+# build js_to_c
 
-catm artifacts/m2min_v3-0.M1 ./simple_asm_defs.M1 ./x86_defs.M1 ./libc-core.M1 m2min_v3.M1
+catm artifacts/js_to_c_simple.c js_to_c/js_to_c_m2_support.c js_to_c/js_to_c_simple.c
+
+${PATH}/cc_x86 artifacts/js_to_c_simple.c artifacts/js_to_c.exe.M1
+catm artifacts/js_to_c.exe-0.M1 ./simple_asm_defs.M1 ./x86_defs.M1 ./libc-core.M1 artifacts/js_to_c.exe.M1
+M0 artifacts/js_to_c.exe-0.M1 artifacts/js_to_c.exe.hex2
+catm artifacts/js_to_c.exe-0.hex2 ./ELF-i386.hex2 artifacts/js_to_c.exe.hex2
+hex2-0 artifacts/js_to_c.exe-0.hex2 artifacts/js_to_c.exe
+
+# build m2min_v3.exe
+
+catm artifacts/m2min_v3.c dummy_head.c simple_support_js.c m2min_v3.js simple_support_js_m2.js simple_support_js_m2_prims.c
+
+./artifacts/js_to_c.exe artifacts/m2min_v3.c artifacts/m2min_v3_tmp.c
+${PATH}/cc_x86 artifacts/m2min_v3_tmp.c artifacts/m2min_v3.M1
+catm artifacts/m2min_v3-0.M1 ./simple_asm_defs.M1 ./x86_defs.M1 ./libc-core.M1 artifacts/m2min_v3.M1
 M0 artifacts/m2min_v3-0.M1 artifacts/m2min_v3-0.hex2
 catm artifacts/m2min_v3-0-0.hex2 ./ELF-i386.hex2 artifacts/m2min_v3-0.hex2
 hex2-0 artifacts/m2min_v3-0-0.hex2 artifacts/m2min_v3.exe
 
 ${PATH}/../bin/chmod 755 artifacts/m2min_v3.exe
 
-# rebuild m2min_v3 with itself
+# check that m2min_v3.exe can rebuilt itself
 
-catm artifacts/m2min_v3.c dummy_head.c simple_support_js.c m2min_v3.js simple_support_js_m2.js simple_support_js_m2_prims.c
 ./artifacts/m2min_v3.exe artifacts/m2min_v3.c artifacts/boot0.exe.M1
 
 # check m2min_v3 built with itself is identical
 
 ${PATH}/../bin/sha256sum -c sums_m2min_v3
-
-# build js_to_c
-
-catm artifacts/js_to_c_simple.c js_to_c/js_to_c_m2_support.c js_to_c/js_to_c_simple.c
-
-
-./artifacts/m2min_v3.exe artifacts/js_to_c_simple.c artifacts/js_to_c.exe.M1
-catm artifacts/js_to_c.exe-0.M1 ./simple_asm_defs.M1 ./x86_defs.M1 ./libc-core.M1 artifacts/js_to_c.exe.M1
-M0 artifacts/js_to_c.exe-0.M1 artifacts/js_to_c.exe.hex2
-catm artifacts/js_to_c.exe-0.hex2 ./ELF-i386.hex2 artifacts/js_to_c.exe.hex2
-hex2-0 artifacts/js_to_c.exe-0.hex2 artifacts/js_to_c.exe
 
 # convert pnut.js to C
 
