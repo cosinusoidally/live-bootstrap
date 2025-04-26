@@ -339,5 +339,3 @@ if match x${UPDATE_CHECKSUMS} xTrue; then
 else
     sha256sum -c ${pkg}.${ARCH}.checksums
 fi
-
-exit 1 # Stop the execution so we can check the output
