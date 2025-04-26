@@ -11,5 +11,5 @@ STAGE0_PATH=/x86/bin/
 cd m2min_v3
 kaem --file ./build.kaem
 
-cp ../artifacts/pnut_js.exe ${BINDIR}/pnut-exe
+cp artifacts/pnut_js.exe ${BINDIR}/pnut-exe
 chmod 755 ${BINDIR}/pnut-exe
