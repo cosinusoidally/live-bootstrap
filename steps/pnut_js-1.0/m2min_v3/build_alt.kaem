@@ -43,7 +43,7 @@ catm artifacts/pnut_m2.c ../pnut_refactor/simple_support_js_m2_prims.c ../pnut_r
 
 # compile pnut.js
 
-./artifacts/m2min_v3.exe artifacts/pnut_m2.c artifacts/pnut_js.exe.M1
+${PATH}/cc_x86 artifacts/pnut_m2.c artifacts/pnut_js.exe.M1
 catm artifacts/pnut_js.exe-0.M1 ./simple_asm_defs.M1 ./x86_defs.M1 ./libc-core.M1 artifacts/pnut_js.exe.M1
 M0 artifacts/pnut_js.exe-0.M1 artifacts/pnut_js.exe.hex2
 catm artifacts/pnut_js.exe-0.hex2 ./ELF-i386.hex2 artifacts/pnut_js.exe.hex2
