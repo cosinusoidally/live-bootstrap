@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# SPDX-FileCopyrightText: 2023 fosslinux <fosslinux@aussies.space>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+set -ex
+
+STAGE0_PATH=/x86/bin/
+
+cd pnut_refactor
+kaem --file ./build_alt.kaem
+
+cp artifacts/pnut_js.exe ${BINDIR}/pnut-exe
+chmod 755 ${BINDIR}/pnut-exe
