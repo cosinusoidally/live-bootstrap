@@ -8,7 +8,7 @@ set -ex
 
 STAGE0_PATH=/x86/bin/
 
-cd m2min_v3
+cd pnut_refactor
 kaem --file ./build_alt.kaem
 
 cp artifacts/pnut_js.exe ${BINDIR}/pnut-exe
